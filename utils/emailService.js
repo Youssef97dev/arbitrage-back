@@ -1,21 +1,26 @@
-const nodemailer = require('nodemailer');
-const fs = require('fs');
+const nodemailer = require("nodemailer");
+const fs = require("fs");
 
 // Configuration email simplifiée
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
-    user: process.env.SMTP_USER || 'votressalles@gmail.com',
-    pass: process.env.SMTP_PASS || 'V23121988s'
-  }
+    user: process.env.SMTP_USER || "votressalles@gmail.com",
+    pass: process.env.SMTP_PASS || "V23121988s",
+  },
 });
 
-const sendReceiptEmail = async (userEmail, userName, pdfPath, transactionId) => {
+const sendReceiptEmail = async (
+  userEmail,
+  userName,
+  pdfPath,
+  transactionId
+) => {
   try {
-    console.log('Tentative d\'envoi email à:', userEmail);
-    console.log('Avec les identifiants:', process.env.SMTP_USER);
+    console.log("Tentative d'envoi email à:", userEmail);
+    console.log("Avec les identifiants:", process.env.SMTP_USER);
     const mailOptions = {
-      from: process.env.SMTP_USER || 'votressalles@gmail.com',
+      from: process.env.SMTP_USER || "votressalles@gmail.com",
       to: userEmail,
       subject: `🧾 Reçu de paiement - Transaction ${transactionId}`,
       html: `
@@ -50,7 +55,7 @@ const sendReceiptEmail = async (userEmail, userName, pdfPath, transactionId) => 
             </p>
             
             <div style="text-align: center; margin-top: 30px;">
-              <a href="http://localhost:3001/dashboard" 
+              <a href="https://arbitrage-back-tdns.onrender.com/dashboard" 
                  style="background: #2563EB; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
                 Accéder à mon espace
               </a>
@@ -65,24 +70,24 @@ const sendReceiptEmail = async (userEmail, userName, pdfPath, transactionId) => 
       attachments: [
         {
           filename: `recu_${transactionId}.pdf`,
-          path: pdfPath
-        }
-      ]
+          path: pdfPath,
+        },
+      ],
     };
 
-    console.log('Envoi en cours...');
+    console.log("Envoi en cours...");
     const result = await transporter.sendMail(mailOptions);
-    console.log('Email envoyé avec succès:', result.messageId);
-    
+    console.log("Email envoyé avec succès:", result.messageId);
+
     // Supprimer le fichier PDF après envoi
     fs.unlinkSync(pdfPath);
-    
+
     return true;
   } catch (error) {
-    console.error('Erreur détaillée envoi email:');
-    console.error('Code:', error.code);
-    console.error('Message:', error.message);
-    console.error('Response:', error.response);
+    console.error("Erreur détaillée envoi email:");
+    console.error("Code:", error.code);
+    console.error("Message:", error.message);
+    console.error("Response:", error.response);
     return false;
   }
 };

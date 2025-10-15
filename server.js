@@ -120,7 +120,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
 // Route Google OAuth (simulation)
 app.get("/api/auth/google", (req, res) => {
   // Redirection vers Google OAuth
-  const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=http://localhost:3000/api/auth/google/callback&scope=email profile&response_type=code`;
+  const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=https://arbitrage-back-tdns.onrender.com/api/auth/google/callback&scope=email profile&response_type=code`;
   res.redirect(googleAuthUrl);
 });
 
@@ -129,9 +129,11 @@ app.get("/api/auth/google/callback", async (req, res) => {
   try {
     // TODO: Implémenter la logique Google OAuth
     // Pour l'instant, redirection vers login
-    res.redirect("http://localhost:3001/login?google=error");
+    res.redirect("https://arbitrage-back-tdns.onrender.com/login?google=error");
   } catch (error) {
-    res.redirect("http://localhost:3001/login?error=google_auth_failed");
+    res.redirect(
+      "https://arbitrage-back-tdns.onrender.com/login?error=google_auth_failed"
+    );
   }
 });
 
