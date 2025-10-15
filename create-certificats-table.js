@@ -1,11 +1,15 @@
-const { Pool } = require('pg');
+const { Pool } = require("pg");
+require("dotenv").config();
 
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'arbitrage_db',
-  password: process.env.DB_PASSWORD || 'root',
+  user: process.env.DB_USER || "postgres",
+  host: process.env.DB_HOST || "localhost",
+  database: process.env.DB_NAME || "arbitrage_db",
+  password: process.env.DB_PASSWORD || "root",
   port: process.env.DB_PORT || 5432,
+  ssl: {
+    rejectUnauthorized: false, // required for Render PostgreSQL
+  },
 });
 
 async function createCertificatsTable() {
@@ -42,9 +46,9 @@ async function createCertificatsTable() {
       )
     `);
 
-    console.log('Tables certificats créées avec succès');
+    console.log("Tables certificats créées avec succès");
   } catch (error) {
-    console.error('Erreur création tables:', error);
+    console.error("Erreur création tables:", error);
   } finally {
     await pool.end();
   }
