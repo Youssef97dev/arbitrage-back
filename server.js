@@ -120,7 +120,7 @@ app.post("/api/auth/forgot-password", async (req, res) => {
 // Route Google OAuth (simulation)
 app.get("/api/auth/google", (req, res) => {
   // Redirection vers Google OAuth
-  const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=YOUR_GOOGLE_CLIENT_ID&redirect_uri=https://arbitrage-back-tdns.onrender.com/api/auth/google/callback&scope=email profile&response_type=code`;
+  const googleAuthUrl = `https://accounts.google.com/oauth/authorize?client_id=460948627027-opesmchrbhqjbhs2ctqtqhb4f1luvvp3.apps.googleusercontent.com&redirect_uri=https://arbitrage-back-tdns.onrender.com/api/auth/google/callback&scope=email profile&response_type=code`;
   res.redirect(googleAuthUrl);
 });
 
